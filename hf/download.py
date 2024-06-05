@@ -33,6 +33,8 @@ from huggingface_hub.utils import (
     RepositoryNotFoundError,
 )
 
+from hf.logger import get_default_logger
+
 
 class HuggingFaceDownload:
     def __init__(
@@ -71,9 +73,7 @@ class HuggingFaceDownload:
         if logger:
             self._logger = logger
         else:
-            # If no logger is provided, use a default logger with INFO level
-            self._logger = logging.getLogger(self.__class__.__name__)
-            self._logger.setLevel(logging.INFO)
+            self._logger = get_default_logger(self.__class__.__name__, logging.INFO)
 
     def download_file(
         self,
