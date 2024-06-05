@@ -5,11 +5,52 @@ description = "Alternative CLI tool for managing huggingface hub"
 authors = ["Austin Berrio <aberrio@teleprint.me>"]
 license = "AGPL"
 readme = "README.md"
-packages = [{include = "hub"}]
+keywords = ["hub", "huggingface", "huggingface_hub", "cli"]
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = ">=3.11"
 
+# Web and Data Retrieval
+requests = "^2.31.0"
+
+# Command-line Tools
+click = "^8.1.7"
+python-dotenv = "^1.0.1"
+python-magic = "^0.4.27"
+tqdm = "^4.66.4"
+
+# NLP (Natural Language Processing)
+huggingface-hub = "^0.23.0"
+
+[tool.poetry.dev-dependencies]
+bpython = "^0.24"
+pytest = "^8.2.0"
+black = "^24.4.2"
+isort = "^5.13.2"
+flake8 = "^7.0.0"
+build = "^1.2.1"
+mkdocs = "^1.6.0"
+mkdocstrings = {version = "^0.25.1", extras = ["python"]}
+mkdocs-material = "^9.5.22"
+ipykernel = "^6.29.4"  # Required for VSCode
+# jupyter = "^1.0.0"  # Install if needed
+# pynvim = "^0.4.3"  # Install if needed
+
+[[tool.poetry.source]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cpu"
+priority = "explicit"
+
+[tool.pytest.ini_options]
+markers = [
+    "slow: run slow tests",
+    "private: test private endpoints",
+]
+
+[tool.build]
+packages = [
+  { include = "hf" }
+]
 
 [build-system]
 requires = ["poetry-core"]
