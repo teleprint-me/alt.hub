@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "hub-alt"
+name = "alt.hub"
 version = "0.1.0"
 description = "Alternative CLI tool for managing huggingface hub"
 authors = ["Austin Berrio <aberrio@teleprint.me>"]
