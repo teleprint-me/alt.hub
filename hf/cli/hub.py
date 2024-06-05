@@ -78,16 +78,16 @@ def upload_command(repo_id, repo_type, local_path, env_path, api_token):
 )
 @click.option(
     "-r",
-    "--resume_download",
+    "--force_download",
     is_flag=True,
-    help="Specify this flag to continue downloading partially downloaded files. If not set, the download will start over.",
+    help="Specify this flag to override resuming downloads. If not set, the download will resume from where it last stopped.",
 )
 @common_options
 def download_command(
     repo_id,
     repo_type,
     local_path,
-    resume_download,
+    force_download,
     is_file,
     env_path,
     api_token,
@@ -96,7 +96,7 @@ def download_command(
         api_token = get_environment(file_path=env_path, variable="HUGGINGFACE_READ_API")
 
     huggingface = HuggingFaceDownload(api_token)
-    huggingface.download(local_path, repo_id, repo_type, resume_download, is_file)
+    huggingface.download(local_path, repo_id, repo_type, force_download, is_file)
 
 
 if __name__ == "__main__":

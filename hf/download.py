@@ -61,7 +61,7 @@ class HuggingFaceDownload:
               causing frustration and confusion.
         """
         # Authenticate with the Hugging Face API using the provided token
-        login(token)
+        login(token, add_to_git_credential=False)
 
         # Initialize the Hugging Face API client
         self.api = HfApi()
@@ -81,7 +81,7 @@ class HuggingFaceDownload:
         local_path: str,
         repo_id: str,
         repo_type: Optional[str] = None,
-        resume_download: bool = False,
+        force_download: bool = False,
     ) -> str:
         model_path = hf_hub_download(
             repo_id=repo_id,
@@ -89,8 +89,7 @@ class HuggingFaceDownload:
             filename=local_file,
             local_dir=local_path,
             local_dir_use_symlinks=False,
-            force_download=False,
-            resume_download=resume_download,
+            force_download=force_download,
             token=self.token,  # This should work, but doesn't because the argument isn't respected!
         )
         self._logger.info(f"Downloaded {local_file} to {model_path}")
@@ -102,7 +101,7 @@ class HuggingFaceDownload:
         local_path: str,
         local_files: List[str],
         repo_type: Optional[str] = None,
-        resume_download: bool = False,
+        force_download: bool = False,
     ) -> List[str]:
         model_paths = []
         for local_file in local_files:
@@ -111,7 +110,7 @@ class HuggingFaceDownload:
                 local_path=local_path,
                 repo_id=repo_id,
                 repo_type=repo_type,
-                resume_download=resume_download,
+                force_download=force_download,
             )
             model_paths.append(model_path)
         return model_paths
@@ -121,7 +120,7 @@ class HuggingFaceDownload:
         local_path: str,
         repo_id: str,
         repo_type: Optional[str] = None,
-        resume_download: bool = False,
+        force_download: bool = False,
     ) -> None:
         # NOTE: Consider resetting `retries` to zero if a retry is successful.
         self._logger.info(f"Using {repo_id} to download source data.")
@@ -143,11 +142,11 @@ class HuggingFaceDownload:
                 if not x.rfilename.startswith("consolidated")
             ]
             self._download_all_files(
-                repo_id,
-                local_path,
-                local_files,
-                repo_type,
-                resume_download,
+                repo_id=repo_id,
+                local_path=local_path,
+                local_files=local_files,
+                repo_type=repo_type,
+                force_download=force_download,
             )
         except (EntryNotFoundError, RepositoryNotFoundError) as e:
             self._logger.error(f"Error downloading source: {e}")
@@ -162,7 +161,7 @@ class HuggingFaceDownload:
                     local_path,
                     local_files,
                     repo_type,
-                    resume_download,
+                    force_download,
                 )
         except Exception as e:
             self._logger.error(f"Error downloading source: {e}")
@@ -173,7 +172,7 @@ class HuggingFaceDownload:
         path: Union[str, Path],
         repo_id: str,
         repo_type: Optional[str] = None,
-        resume_download: bool = False,
+        force_download: bool = False,
         is_file: bool = False,
     ):
         """
@@ -196,7 +195,7 @@ class HuggingFaceDownload:
                 local_path=str(local_path),
                 repo_id=repo_id,
                 repo_type=repo_type,
-                resume_download=resume_download,
+                force_download=force_download,
             )
         else:
             path_obj.mkdir(parents=True, exist_ok=True)
@@ -204,5 +203,5 @@ class HuggingFaceDownload:
                 local_path=str(path_obj),
                 repo_id=repo_id,
                 repo_type=repo_type,
-                resume_download=resume_download,
+                force_download=force_download,
             )
