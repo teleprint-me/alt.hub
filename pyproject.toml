@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "hub-alt"
+version = "0.1.0"
+description = "Alternative CLI tool for managing huggingface hub"
+authors = ["Austin Berrio <aberrio@teleprint.me>"]
+license = "AGPL"
+readme = "README.md"
+packages = [{include = "hub"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
