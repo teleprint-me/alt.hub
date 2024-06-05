@@ -13,6 +13,7 @@ User Access Token:
 NOTE: This is still a Work in Progress.
 """
 
+import json
 import logging
 import sys
 from logging import Logger
@@ -136,7 +137,12 @@ class HuggingFaceDownload:
             else:
                 metadata = model_info(repo_id)
 
-            local_files = [x.rfilename for x in metadata.siblings]
+            # NOTE: Ignore consolidated files to enforce dedupping
+            local_files = [
+                x.rfilename
+                for x in metadata.siblings
+                if not x.rfilename.startswith("consolidated")
+            ]
             self._download_all_files(
                 repo_id,
                 local_path,
