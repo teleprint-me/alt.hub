@@ -13,7 +13,6 @@ User Access Token:
 NOTE: This is still a Work in Progress.
 """
 
-import json
 import logging
 import sys
 from logging import Logger
