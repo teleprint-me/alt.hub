@@ -11,7 +11,7 @@ keywords = ["hub", "huggingface", "huggingface_hub", "cli"]
 python = ">=3.11"
 
 # Web and Data Retrieval
-requests = "^2.31.0"
+requests = "^2.32.4"
 
 # Command-line Tools
 python-dotenv = "^1.0.1"
